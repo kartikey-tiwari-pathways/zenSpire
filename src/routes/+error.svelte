@@ -6,7 +6,7 @@
     {#if page.status === 404}
     <img src="https://media.tenor.com/IHdlTRsmcS4AAAAM/404.gif" alt="404 gif">
     {:else}
-        <p class="text-4xl text-white mt-8 font-bold">{page.status}</p>
+        <p class="text-4xl text-black mt-8 font-bold">{page.status}</p>
     {/if}
-    <p class="text-4xl text-white mt-8 font-bold">{page.error.message}</p>
+    <p class="text-4xl text-black mt-8 font-bold">Sorry, we had a small error (details: {page.error.message})</p>
 </div>
