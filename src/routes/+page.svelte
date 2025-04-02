@@ -1,6 +1,12 @@
 <script>
     import { goto } from "$app/navigation";
+    import { firebaseConfig, currentUser } from "$lib";
+    import { initializeApp } from "firebase/app";
+    import { getAuth } from "firebase/auth";
     import { onMount } from "svelte";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
     onMount(() => {
         document.title = "Home | zenSpire"
@@ -8,6 +14,10 @@
 
     function transitionToPage(page) {
         goto(`/${page}`);
+    }
+
+    if (!currentUser(auth)) {
+        goto("/auth");
     }
 </script>
 
