@@ -11,12 +11,9 @@
     let resultElement;
     let resultElementBase = "text-2xl font-bold mt-2 border-2 bg-black p-2";
 
-    onMount(() => {
-        if (currentUser(auth)) {
-            goto("/");
-        }
-    })
-
+    if (currentUser(auth)) {
+        goto("/");
+    }
     function newAccount() {
         goto("/auth/signup");
     }
