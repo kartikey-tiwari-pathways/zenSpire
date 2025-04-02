@@ -14,10 +14,16 @@ const firebaseConfig = {
 
 // Functions
 
+/**
+ * Returns current user data
+ * @param {import("firebase/auth").Auth} auth 
+ * @returns {import("firebase/auth").User} User data
+ */
 function currentUser(auth) {
-    onAuthStateChanged(auth, user => {
-        return user;
-    });
+    // onAuthStateChanged(auth, user => {
+    //     return user;
+    // });
+    return auth.currentUser;
 }
 
 /**
