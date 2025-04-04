@@ -10,14 +10,13 @@
 
     onMount(() => {
         document.title = "Home | zenSpire"
+        if (!auth.currentUser) {
+            goto("/auth");
+        }
     });
 
     function transitionToPage(page) {
         goto(`/${page}`);
-    }
-
-    if (!currentUser(auth)) {
-        goto("/auth");
     }
 </script>
 

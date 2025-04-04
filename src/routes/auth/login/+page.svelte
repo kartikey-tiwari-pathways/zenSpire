@@ -19,6 +19,7 @@
         signInWithEmailAndPassword(auth, email, password).then(() => {
             resultElement.className = `${resultElementBase} text-green-500`;
             resultElement.textContent = "Success!";
+            back();
         }).catch(err => {
             resultElement.className = `${resultElementBase} text-red-500`;
             resultElement.textContent = `Error: ${err.code}`;

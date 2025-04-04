@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
     import { firebaseConfig } from "$lib";
     import { initializeApp } from "firebase/app";
-    import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+    import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -18,7 +18,15 @@
     function signUp() {
         createUserWithEmailAndPassword(auth, email, password).then(() => {
             resultElement.className = `${resultElementBase} text-green-500`;
-            resultElement.textContent = "Success!";
+            resultElement.textContent = "Success! Attempting login...";
+            signInWithEmailAndPassword(auth, email, password).then(() => {
+                resultElement.className = `${resultElementBase} text-green-500`;
+                resultElement.textContent = "Success!";
+                back();
+            }).catch(err => {
+                resultElement.className = `${resultElementBase} text-red-500`;
+                resultElement.textContent = `Error: ${err.code}`;
+            });
         }).catch(err => {
             resultElement.className = `${resultElementBase} text-red-500`;
             resultElement.textContent = `Error: ${err.code}`;

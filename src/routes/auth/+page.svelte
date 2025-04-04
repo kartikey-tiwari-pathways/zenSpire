@@ -10,10 +10,12 @@
 
     let resultElement;
     let resultElementBase = "text-2xl font-bold mt-2 border-2 bg-black p-2";
-
-    if (currentUser(auth)) {
-        goto("/");
-    }
+    onMount(() => {
+        if (auth.currentUser) {
+            goto("/");
+        }
+    });
+    
     function newAccount() {
         goto("/auth/signup");
     }
