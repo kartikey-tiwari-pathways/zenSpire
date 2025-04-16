@@ -12,34 +12,4 @@ const firebaseConfig = {
     appId: "1:207132632281:web:b8e7895dfab27ccc77cac8"
 };
 
-// Functions
-
-/**
- * Returns current user data
- * @param {import("firebase/auth").Auth} auth 
- * @returns {import("firebase/auth").User} User data
- */
-function currentUser(auth) {
-    // onAuthStateChanged(auth, user => {
-    //     return user;
-    // });
-    return auth.currentUser;
-}
-
-/**
- * Gets user data
- * @returns {Object} Returns uid, displayName, email, photoURL, emailVerified
- */
-function getUserData(auth) {
-    onAuthStateChanged(auth, user => {
-        return {
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            emailVerified: user.emailVerified
-        };
-    });
-}
-
-export { currentUser, firebaseConfig }
+export { firebaseConfig }
