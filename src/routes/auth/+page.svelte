@@ -1,6 +1,6 @@
 <script>
     import { goto } from "$app/navigation";
-    import { currentUser, firebaseConfig } from "$lib";
+    import { firebaseConfig } from "$lib";
     import { initializeApp } from "firebase/app";
     import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
     import { onMount } from "svelte";
