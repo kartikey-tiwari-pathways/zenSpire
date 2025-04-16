@@ -2,24 +2,28 @@
     import { goto } from "$app/navigation";
     import { firebaseConfig, currentUser } from "$lib";
     import { initializeApp } from "firebase/app";
-    import { getAuth } from "firebase/auth";
+    import { getAuth, onAuthStateChanged } from "firebase/auth";
     import { onMount } from "svelte";
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    let displayName;
+
     onMount(() => {
         document.title = "Home | zenSpire"
-        if (!auth.currentUser) {
-            goto("/auth");
-        }
+        onAuthStateChanged(auth, user => {
+            if (!user) {
+                goto("/auth");
+            } else {
+                displayName = user.displayName;
+            }
+        });
     });
 
     function transitionToPage(page) {
         goto(`/${page}`);
     }
-
-    let displayName = auth.currentUser ? auth.currentUser.displayName : "";
 </script>
 
 <p class="text-4xl text-white mt-8 font-bold">Welcome back, {displayName}</p>

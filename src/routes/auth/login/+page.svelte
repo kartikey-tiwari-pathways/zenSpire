@@ -4,6 +4,15 @@
     import { initializeApp } from "firebase/app";
     import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+    onMount(() => {
+        document.title = "Login | zenSpire";
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                goto("/");
+            }
+        });
+    });
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 

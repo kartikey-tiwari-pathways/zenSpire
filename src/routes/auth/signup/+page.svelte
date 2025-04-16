@@ -6,6 +6,15 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    
+    onMount(() => {
+        document.title = "Sign up | zenSpire";
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                goto("/");
+            }
+        });
+    });
 
     let email = "";
     let password = "";

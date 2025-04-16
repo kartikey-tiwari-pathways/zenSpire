@@ -11,9 +11,12 @@
     let resultElement;
     let resultElementBase = "text-2xl font-bold mt-2 border-2 bg-black p-2";
     onMount(() => {
-        if (auth.currentUser) {
-            goto("/");
-        }
+        document.title = "Authentication | zenSpire";
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                goto("/");
+            }
+        });
     });
     
     function newAccount() {
