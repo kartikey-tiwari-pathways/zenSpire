@@ -3,17 +3,13 @@
     import { firebaseConfig } from "$lib";
     import { initializeApp } from "firebase/app";
     import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+    import { onMount } from "svelte";
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     
     onMount(() => {
         document.title = "Sign up | zenSpire";
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                goto("/");
-            }
-        });
     });
 
     let email = "";

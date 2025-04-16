@@ -13,11 +13,7 @@
     onMount(() => {
         document.title = "Home | zenSpire"
         onAuthStateChanged(auth, user => {
-            if (!user) {
-                goto("/auth");
-            } else {
-                displayName = user.displayName;
-            }
+            displayName = user.displayName;
         });
     });
 

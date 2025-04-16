@@ -12,11 +12,6 @@
     let resultElementBase = "text-2xl font-bold mt-2 border-2 bg-black p-2";
     onMount(() => {
         document.title = "Authentication | zenSpire";
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                goto("/");
-            }
-        });
     });
     
     function newAccount() {

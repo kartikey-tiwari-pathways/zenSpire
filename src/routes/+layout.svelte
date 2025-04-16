@@ -1,8 +1,36 @@
 <script>
-	import Navbar from '$lib/components/navbar.svelte';
 	import '../app.css';
+	import Navbar from '$lib/components/navbar.svelte';
+    import { getAuth, onAuthStateChanged } from 'firebase/auth';
+    import { initializeApp } from 'firebase/app';
+    import { firebaseConfig } from '$lib';
+    import { afterNavigate, goto } from '$app/navigation';
+    import { page } from '$app/stores';
+    import { get } from 'svelte/store';
+	import { browser } from '$app/environment';
 	
 	let { children } = $props();
+
+	const app = initializeApp(firebaseConfig);
+	const auth = getAuth(app);
+	let user;
+	if (browser) {
+		onAuthStateChanged(auth, _user => {
+			user = _user;
+		});
+
+		afterNavigate(() => {
+			checkAuth(user);
+		});
+	}
+	function checkAuth(user) {
+		const currentPage = get(page).url.pathname;
+		if (user && currentPage !== "/") {
+			goto("/");
+		} else if (!currentPage.startsWith("/auth")) {
+			goto("/auth");
+		}
+	}
 </script>
 
 <div class="flex">
