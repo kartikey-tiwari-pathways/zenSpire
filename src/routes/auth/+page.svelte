@@ -33,7 +33,7 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center w-[calc(100vw-96px)] h-screen">
+<div class="flex flex-col items-center justify-center w-[calc(100vw-96px)] h-screen absolute top-0 right-0">
     <p class="text-4xl font-bold text-black">Welcome!</p>
     <button on:click={newAccount} class="w-auto min-w-72 h-auto min-h-16 bg-white rounded-2xl p-2 text-2xl flex justify-center items-center cursor-pointer hover:bg-gray-400 transition-all mt-8">👋 Create an account</button>
     <button on:click={login} class="w-auto min-w-80 h-auto min-h-16 bg-white rounded-2xl py-3 text-2xl flex justify-center items-center gap-2 cursor-pointer hover:bg-gray-400 transition-all mt-8"><p>🤗</p><p>Already have an account?</p></button>

@@ -43,7 +43,7 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center w-[calc(100vw-96px)] h-screen">
+<div class="flex flex-col items-center justify-center w-[calc(100vw-96px)] h-screen absolute top-0 right-0">
     <p class="text-4xl text-black font-bold">Welcome!</p>
     <form class="flex flex-col items-center mt-6" on:submit={signUp}>
         <input autocomplete="off" bind:value={email} required type="text" name="email" id="email" class="w-auto h-10 rounded-md bg-white text-black text-base p-4 m-4 border-2" placeholder="Enter your email...">
