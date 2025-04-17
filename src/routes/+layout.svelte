@@ -7,27 +7,23 @@
     import { afterNavigate, goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { get } from 'svelte/store';
-	import { browser } from '$app/environment';
 	
 	let { children } = $props();
 
 	const app = initializeApp(firebaseConfig);
 	const auth = getAuth(app);
-	let user;
-	if (browser) {
-		onAuthStateChanged(auth, _user => {
-			user = _user;
-		});
 
-		afterNavigate(() => {
+	afterNavigate(() => {
+		onAuthStateChanged(auth, user => {
 			checkAuth(user);
 		});
-	}
+	});
+
 	function checkAuth(user) {
 		const currentPage = get(page).url.pathname;
-		if (user && currentPage !== "/") {
+		if (user && currentPage.startsWith("/auth")) {
 			goto("/");
-		} else if (!currentPage.startsWith("/auth")) {
+		} else if (!user && !currentPage.startsWith("/auth")) {
 			goto("/auth");
 		}
 	}
