@@ -9,7 +9,8 @@ const firebaseConfig = {
     projectId: "zenspire-a9e65",
     storageBucket: "zenspire-a9e65.firebasestorage.app",
     messagingSenderId: "207132632281",
-    appId: "1:207132632281:web:b8e7895dfab27ccc77cac8"
+    appId: "1:207132632281:web:b8e7895dfab27ccc77cac8",
+    databaseURL: "https://zenspire-a9e65-default-rtdb.firebaseio.com/"
 };
 
 export { firebaseConfig }
