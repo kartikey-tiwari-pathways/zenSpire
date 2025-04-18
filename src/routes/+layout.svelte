@@ -49,6 +49,8 @@
 		<div class="ml-4 z-10 opacity-100 backdrop-opacity-100">
 			{@render children()}
 		</div>
-		<button class="absolute bottom-0 right-0 w-auto h-10 bg-white text-red-500 rounded-md border-2 cursor-pointer p-2 m-2" onclick={logOut}>Sign out</button>
+		{#if !get(page).url.pathname.startsWith("/auth")}
+			<button class="absolute bottom-0 right-0 w-auto h-10 bg-white text-red-500 rounded-md border-2 cursor-pointer p-2 m-2" onclick={logOut}>Sign out</button>
+		{/if}
 	</div>
 </div>
