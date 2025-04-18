@@ -1,17 +1,18 @@
 <script>
 	import '../app.css';
 	import Navbar from '$lib/components/navbar.svelte';
-    import { getAuth, onAuthStateChanged } from 'firebase/auth';
+    import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
     import { initializeApp } from 'firebase/app';
     import { firebaseConfig } from '$lib';
     import { afterNavigate, goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { get } from 'svelte/store';
-	
+	import { getDatabase, get as getFromDatabase, ref } from 'firebase/database';
 	let { children } = $props();
 
 	const app = initializeApp(firebaseConfig);
 	const auth = getAuth(app);
+	const db = getDatabase(app);
 
 	afterNavigate(() => {
 		onAuthStateChanged(auth, user => {
@@ -22,10 +23,22 @@
 	function checkAuth(user) {
 		const currentPage = get(page).url.pathname;
 		if (user && currentPage.startsWith("/auth")) {
-			goto("/");
+			if (user.providerData[0].providerId !== "google.com") {
+				goto("/");
+			} else {
+				getFromDatabase(ref(db, `users/${user.uid}`)).then(snapshot => {
+					if (snapshot.exists()) {
+						goto("/");
+					}
+				});
+			}
 		} else if (!user && !currentPage.startsWith("/auth")) {
 			goto("/auth");
 		}
+	}
+
+	function logOut() {
+		signOut(auth);
 	}
 </script>
 
@@ -36,5 +49,6 @@
 		<div class="ml-4 z-10 opacity-100 backdrop-opacity-100">
 			{@render children()}
 		</div>
+		<button class="absolute bottom-0 right-0 w-auto h-10 bg-white text-red-500 rounded-md border-2 cursor-pointer p-2 m-2" onclick={logOut}>Sign out</button>
 	</div>
 </div>
