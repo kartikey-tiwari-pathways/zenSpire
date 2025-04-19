@@ -101,8 +101,8 @@
         onAuthStateChanged(auth, async user => {
             const userMessageHistoryRef = ref(db, `messages/${user.uid}`);
             await set(userMessageHistoryRef, null);
+            goto("/");
         });
-        goto("/");
     }
 </script>
 
