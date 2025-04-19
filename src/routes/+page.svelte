@@ -22,7 +22,7 @@
 
         const funFactObject = await ai.models.generateContent({
             model: "gemini-2.0-flash",
-            contents: "Give a random fun fact; don't give any other text. It'd be nice if the fun fact was related to mental health; however, keep it positive. Also keep a joyful tone by using things like exclamation marks and such."
+            contents: "Give a random fun fact; don't give any other text. It'd be nice if the fun fact was related to mental health; however, keep it positive. Also keep a joyful tone by using things like exclamation marks and such. Thank you so much!"
         });
         funFact = marked(funFactObject.text);
     });
