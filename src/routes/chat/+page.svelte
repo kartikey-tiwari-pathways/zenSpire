@@ -54,6 +54,7 @@
                 });
                 const response = await chat.sendMessage({ message: systemPrompt });
             }
+            await saveChat();
             messageLog = chat.getHistory();
             chatLoadingAlert.remove();
         });
