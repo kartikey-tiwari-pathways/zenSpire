@@ -15,8 +15,9 @@
 	const db = getDatabase(app);
 
 	afterNavigate(() => {
-		onAuthStateChanged(auth, user => {
+		const unsub = onAuthStateChanged(auth, user => {
 			checkAuth(user);
+			unsub();
 		});
 	});
 

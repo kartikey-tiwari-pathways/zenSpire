@@ -2,7 +2,7 @@
     import { goto } from "$app/navigation";
     import { firebaseConfig } from "$lib";
     import { initializeApp } from "firebase/app";
-    import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
     import { get, set, getDatabase, ref } from "firebase/database";
     import { onMount } from "svelte";
     import countries from "$lib/countries.json";

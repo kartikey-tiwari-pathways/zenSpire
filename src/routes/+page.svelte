@@ -18,8 +18,9 @@
 
     onMount(async () => {
         document.title = "Home | zenSpire"
-        onAuthStateChanged(auth, user => {
+        const unsub = onAuthStateChanged(auth, user => {
             if (user) displayName = user.displayName;
+            unsub();
         });
 
         const funFactObject = await ai.models.generateContent({
@@ -42,7 +43,7 @@
         const confirmation = confirm("Are you SURE you want to delete your account (THIS ACTION CANNOT BE UNDONE)");
         if (!confirmation) return;
         actionLoadingIndicator.style.display = "block";
-        onAuthStateChanged(auth, async user => {
+        const unsub = onAuthStateChanged(auth, async user => {
             const userRef = ref(db, `users/${user.uid}`);
             const messagesRef = ref(db, `messages/${user.uid}`);
             if ((await get(userRef)).val().provider === "email") {
@@ -82,6 +83,7 @@
                     alert("Failed to delete account. Please try again.");
                 }
             }
+            unsub();
         });
     }
 </script>

@@ -38,7 +38,7 @@
      */
     let chat;
     onMount(async () => {
-        onAuthStateChanged(auth, async user => {
+        const unsub = onAuthStateChanged(auth, async user => {
             systemPrompt = await buildSystemPrompt(user.uid);
             const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
             const userMessageHistory = await get(ref(db, `messages/${user.uid}`));
@@ -57,6 +57,7 @@
             await saveChat();
             messageLog = chat.getHistory();
             chatLoadingAlert.remove();
+            unsub();
         });
     });
     
@@ -90,18 +91,20 @@
     }
 
     async function saveChat() {
-        onAuthStateChanged(auth, async user => {
+        const unsub = onAuthStateChanged(auth, async user => {
             const messageHistoryRef = ref(db, `messages/${user.uid}`);
             await set(messageHistoryRef, messageLog);
+            unsub();
         });
     }
     
     function deleteChat() {
         const deleteConfirmation = confirm("Are you SURE you want to delete the whole chat? (THIS ACTION CANNOT BE UNDONE)");
         if (!deleteConfirmation) return;
-        onAuthStateChanged(auth, async user => {
+        const unsub = onAuthStateChanged(auth, async user => {
             const userMessageHistoryRef = ref(db, `messages/${user.uid}`);
             await set(userMessageHistoryRef, null);
+            unsub();
             goto("/");
         });
     }
