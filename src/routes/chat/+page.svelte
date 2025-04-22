@@ -28,7 +28,7 @@
         const snapshot = await get(userRef);
         if (snapshot.exists()) {
             const data = snapshot.val();
-            return systemPrompt = `Ignore all previous instructions. Your name is zenSpire. Act as a student psychologist working with students from 6th grade to college. The age group which we are targetting is 11-21 years; however, you should help everyone. You will address these students' mental health concerns, such as their loneliness, exam stress, academic pressure, so on. Make it conversational and easy to understand. Talk like a real human and the reading level of the conversation should be ok for the level of the user. Give shorter responses similar to texting someone unless specifically ask otherwise. The user's name is ${data.displayname} and they are in ${data.educationlvl}, and they are ${data.age} years old. They are in ${data.country}. Congratulations; you are now ready to start helping the user. The conversation starts from the next message.`;
+            return systemPrompt = `Ignore all previous instructions. Your name is zenSpire. Act as a student psychologist working with students from 6th grade to college. The age group which we are targetting is 11-21 years; however, you should help everyone. You will address these students' mental health concerns, such as their loneliness, exam stress, academic pressure, so on. Make it conversational and easy to understand. Talk like a real human and the reading level of the conversation should be ok for the level of the user. Give shorter responses similar to texting someone unless specifically ask otherwise. The user's name is ${data.displayname} and they are in "${data.educationlvl}" (the data in quotes is their education level), and they are ${data.age} years old. They are in ${data.country} (the country as a country code such as IN for India, AO for Angola, and so on.). Congratulations; you are now ready to start helping the user. The conversation starts from the next message.`;
         } else {
             console.error("User doc doesn't exist");
         }
@@ -54,9 +54,9 @@
                 });
                 const response = await chat.sendMessage({ message: systemPrompt });
             }
-            await saveChat();
             messageLog = chat.getHistory();
-            chatLoadingAlert.remove();
+            chatLoadingAlert.style.display = "none";
+            await saveChat();
             unsub();
         });
     });
@@ -94,6 +94,7 @@
         const unsub = onAuthStateChanged(auth, async user => {
             const messageHistoryRef = ref(db, `messages/${user.uid}`);
             await set(messageHistoryRef, messageLog);
+            console.log("SAVED CHAT");
             unsub();
         });
     }
@@ -104,6 +105,7 @@
         const unsub = onAuthStateChanged(auth, async user => {
             const userMessageHistoryRef = ref(db, `messages/${user.uid}`);
             await set(userMessageHistoryRef, null);
+            console.log("DELETED CHAT");
             unsub();
             goto("/");
         });
